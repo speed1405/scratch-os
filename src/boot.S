@@ -24,6 +24,9 @@ _start:
     cmp $0x36d76289, %eax
     jne .no_multiboot
 
+    # Save multiboot info pointer
+    mov %ebx, %edi
+
     call check_cpuid
     call check_long_mode
 
@@ -127,8 +130,12 @@ long_mode_start:
     mov %ax, %fs
     mov %ax, %gs
 
-    # Call _start_rust (which will be linked later)
-    # The 'extern' keyword is not needed in GAS for this
+    # EDI already contains multiboot pointer from _start
+    # In 64-bit calling convention, RDI is the first arg.
+    # Since we are in long mode, we should ensure the upper bits of RDI are clear.
+    mov %edi, %edi
+
+    # Call _start_rust
     call _start_rust
     hlt
 

@@ -2,10 +2,10 @@ ENTRY(_start)
 
 SECTIONS {
     . = 1M;
+    __kernel_start = .;
 
     .boot :
     {
-        /* ensure that the multiboot header is at the beginning */
         KEEP(*(.boot))
     }
 
@@ -28,4 +28,6 @@ SECTIONS {
     {
         *(.bss)
     }
+
+    __kernel_end = .;
 }
