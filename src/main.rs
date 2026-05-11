@@ -1,22 +1,19 @@
 #![no_std]
 #![no_main]
 
+mod vga_buffer;
+
 use core::panic::PanicInfo;
 
-fn hlt_loop() -> ! {
-    loop {
-        unsafe {
-            core::arch::asm!("hlt");
-        }
-    }
-}
-
 #[no_mangle]
-pub extern "C" fn _start() -> ! {
-    hlt_loop()
+pub extern "C" fn _start_rust() -> ! {
+    println!("Hello World{}", "!");
+
+    loop {}
 }
 
 #[panic_handler]
-fn panic(_info: &PanicInfo) -> ! {
-    hlt_loop()
+fn panic(info: &PanicInfo) -> ! {
+    println!("{}", info);
+    loop {}
 }
