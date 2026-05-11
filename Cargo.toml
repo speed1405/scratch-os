@@ -1,0 +1,14 @@
+[package]
+name = "scratch-os"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bootloader = "0.9.23"
+volatile = "0.2.7"
+spin = "0.9.8"
+x86_64 = "0.14.10"
+uart_16550 = "0.2.19"
+
+[package.metadata.bootloader]
+map-physical-memory = true
