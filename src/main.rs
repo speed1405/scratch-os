@@ -3,12 +3,20 @@
 
 use core::panic::PanicInfo;
 
+fn hlt_loop() -> ! {
+    loop {
+        unsafe {
+            core::arch::asm!("hlt");
+        }
+    }
+}
+
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-    loop {}
+    hlt_loop()
 }
 
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
-    loop {}
+    hlt_loop()
 }
